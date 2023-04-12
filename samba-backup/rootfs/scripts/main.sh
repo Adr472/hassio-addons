@@ -36,6 +36,18 @@ function create-backup {
 }
 
 # ------------------------------------------------------------------------------
+# Wait x minutes for backup file to be created
+# ------------------------------------------------------------------------------
+function wait_for_backup_file() {
+  local wait_minutes="${1:-10}"; shift # 10 minutes as default timeout
+  test $wait_minutes -lt 1 && echo 'At least 1 minute is required' && return 1
+
+  until test $((wait_minutes--)) -eq 0 -o -e "$SLUG" ; do sleep 60; done
+
+  test $wait_minutes -ge 0 # equivalent: let ++wait_seconds
+}
+
+# ------------------------------------------------------------------------------
 # Copy the latest backup to the remote share.
 # ------------------------------------------------------------------------------
 function copy-backup {

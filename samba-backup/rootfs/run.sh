@@ -21,7 +21,7 @@ function run-backup {
 
         # run entire backup steps
         # shellcheck disable=SC2015
-        create-backup && copy-backup && cleanup-backups-local && cleanup-backups-remote \
+        create-backup && wait_file 120 && copy-backup && cleanup-backups-local && cleanup-backups-remote \
             && update-sensor "${SAMBA_STATUS[2]}" "ALL" \
             || update-sensor "${SAMBA_STATUS[3]}" "ALL"
 
@@ -30,7 +30,6 @@ function run-backup {
         bashio::log.info "Backup finished"
     ) 200>/tmp/samba_backup.lockfile
 }
-
 
 # init config and sensor
 get-config
