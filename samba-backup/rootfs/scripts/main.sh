@@ -39,6 +39,7 @@ function create-backup {
 # Wait x minutes for backup file to be created
 # ------------------------------------------------------------------------------
 function wait_for_backup_file() {
+  bashio::log.info "Waiting for \"${SLUG}\" file to appear"
   local wait_minutes="${1:-10}"; shift # 10 minutes as default timeout
   test $wait_minutes -lt 1 && echo 'At least 1 minute is required' && return 1
 
