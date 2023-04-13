@@ -21,7 +21,7 @@ function run-backup {
 
         # run entire backup steps
         # shellcheck disable=SC2015
-        create-backup && wait_for_backup_file 120 && copy-backup && cleanup-backups-local && cleanup-backups-remote \
+        create-backup && wait_file 120 && copy-backup && cleanup-backups-local && cleanup-backups-remote \
             && update-sensor "${SAMBA_STATUS[2]}" "ALL" \
             || update-sensor "${SAMBA_STATUS[3]}" "ALL"
 
