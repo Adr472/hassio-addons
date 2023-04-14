@@ -22,7 +22,8 @@ function run-backup {
         # run entire backup steps
         # shellcheck disable=SC2015
         create-backup
-		
+
+        bashio::log.info "Create backup command done, waiting for file"
 		wait_for_backup_file 120 && copy-backup && cleanup-backups-local && cleanup-backups-remote \
             && update-sensor "${SAMBA_STATUS[2]}" "ALL" \
             || update-sensor "${SAMBA_STATUS[3]}" "ALL"
